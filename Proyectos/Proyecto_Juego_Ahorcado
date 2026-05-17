@@ -1,0 +1,181 @@
+//Por:
+//Luis Mario Reyes Sánchez
+//Jose Ivan Morales Pineda
+
+using System;
+using System.Linq;
+using System.Net;
+using System.Collections.Generic;
+
+namespace Juego_de_ahorcado_ProyectoParcial;
+
+public static class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine("•|=====JUEGO DEL AHORCADO=====|•");
+        Console.WriteLine("Las palabras del ahorcado son relacionadas a VACACIONAR");
+
+        Console.WriteLine(" ");
+        Console.WriteLine("Terreno de juego: ");
+        //Arreglo de las palabraa ocultas
+        string[] palabras = { "arena", "hotel", "gruta", "rio", "mar", "hospedaje" };
+        Random rnd = new Random();
+        //Crearemos una lista para guadar y saber las letras utilizadas
+        List<char> letralist = new List<char>();
+
+
+        string palabraelegida = "";
+        //Definir un indice para saber la palabra elegida entre las palabras que hay
+        int indice = rnd.Next(0, palabras.Length); //Asignarle el random
+
+        //""= usar esa palabra dependiendo en donde este el indice
+        palabraelegida = palabras[indice];
+
+        
+        
+        char[] letter = new char[palabraelegida.Length];
+
+        //<<Hasta aqui escoge una palabra del arreglo al azar>>
+
+
+
+        //ahora vamos a mostrar la palabra aletaoria pero ocualta para el usuario
+
+        for (int i = 0; i < palabraelegida.Length; i++)
+        {
+            //hacemos un incremneto de la lettra mas la incognira para sunar hasta la cadena de toda la palabra osease toda la palabra
+            letter[i] = '_';
+
+            Console.Write(letter[i]);
+
+
+
+        }
+        //imprimir acabando el ciclo la palbara completa de forma incognita
+
+        int vidas = 6;
+
+        //un bucle do-while para repetir la busqueda de palabra para que el ususario puede escribir la letra y rellenar la letra
+
+        do
+        {
+
+            Console.WriteLine(" ");
+
+
+            //Ingresar la letra que el usuario quiera
+            Console.WriteLine("Ingrese una letra:");
+            string letraingresada = (Console.ReadLine()); //primero es string para validar si el usuario deja espacio en blanco o bien escribe mas de una letra
+            Console.WriteLine("");
+
+            bool bandera = false; //cree una bandera para saber si se encontro la letra correcta o si no
+
+
+            if (letraingresada == "")
+            {
+                Console.WriteLine("Desicion invalida no deje espacio en blanco");
+            }
+            else if (letraingresada.Length > 1)
+            {
+                Console.WriteLine("Opcion no valida usted escribio mas de una letra");
+            }
+            else
+            {
+                //Esto lo que hace es convertir la letra ingresada a char y solo usamos la primera del string osease solo el caracter por eso es indice 0
+                char letrausada = letraingresada[0];
+
+
+
+
+
+
+
+
+
+
+                //Aqui vamos a evaluar si la letra es repetida y si lo es se imprima
+                if (letralist.Contains(letrausada))
+                {
+                    Console.WriteLine("La letra: " + letraingresada + " ya fue usada");
+                }
+                else
+                {
+                    //si no fue usada que se añada a la lista para a la siguiente vuelta validar si esta esta dentro de la lista
+                    letralist.Add(letrausada);
+
+
+
+                    //Aqui remplazamos y comparamos si la letra elegida por el usario es la misma que tiene la palabara entonces rellena el arreglo
+                    for (int i = 0; i < palabraelegida.Length; i++)
+                    {
+                        //Si la letra ingresada incluye una letra de la palabra elegida entonces que nuetra bandera sea verdadera y que se remplaze letter _ por la letra ingresada del user
+                        if (letrausada == palabraelegida[i])
+                        {
+                            letter[i] = letrausada;
+                            bandera = true;
+                        }
+
+                    }
+                    //por el contrario que se reste y que la bandera sea falsa o mejor dicho si es falsa se reste y muestre 
+
+                    if (bandera == false)
+                    {
+                        vidas--;
+                        Console.WriteLine("letra incorrecta te quedan " + vidas + " vidas");
+
+                    }
+
+
+
+
+                    //imprimimos el arreglo pero ahora donde se incerto la letra que el usuario ingreso si acerto se coloca de lo contario se queda igual
+                    for (int i = 0; i < letter.Length; i++)
+                    {
+                        Console.Write(letter[i]);
+                    }
+
+                    //Detectar si gano o aun no
+                    //comenzamos con true para dar o indicio de que ganamos mas sin embargo si encuentra un _ en nuestra palabra entonces aun no acaba esto
+                    bool ganador = true;
+
+                    //hacemos el recorrido y si aun queda _ eso quiere decir que aun no gana
+                    for (int i = 0; i < letter.Length; i++)
+                    {
+
+                        if (letter[i] == '_')
+                        {
+                            ganador = false;
+                        }
+                    }
+
+                    //por el contrario si es true y hace la validacion y no quedan _ eso quiere decir que gano!!!
+
+                    if (ganador == true)
+                    {
+                        Console.WriteLine(" ");
+                        Console.WriteLine("Usted gano muchas felicidades!!!!");
+                        break;
+                    }
+                    //Si se queda sin vidas que pierda y diga fin del juego
+                    if (vidas == 0)
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("Fin del juego...");
+
+                    }
+
+
+                }
+            }
+        } while (vidas > 0);
+
+
+
+
+
+
+
+
+    }
+}
