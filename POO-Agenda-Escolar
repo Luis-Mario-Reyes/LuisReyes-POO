@@ -1,0 +1,408 @@
+//POR LUIS MARIO REYES SANCHEZ Y IVAN MORALES PINEDA
+//Padre
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace Agenda_Escolar;
+
+public class Contacto
+{
+    private string nombre;
+    private string telefono;
+    private string correo;
+
+    //Hacemos publica nuestros atributos para su posterior uso
+    public string Getnombre()
+    {
+        return nombre;
+    }
+
+    public void setnombre(string nom)
+    {
+        nombre = nom;
+    }
+
+    public string Gettelefono()
+    {
+        return telefono;
+    }
+
+    public void settelefono(string tel)
+    {
+        telefono = tel;
+    }
+
+    public string Getcorreo()
+    {
+        return correo;
+    }
+
+    public void setcorreo(string cor)
+    {
+        correo = cor;
+    }
+
+    //Hacemos sobreescritura de metodos para su posterior uso con las demas clases hijas
+    public virtual void Mostrarinformacion()
+    {
+        Console.WriteLine("Informacion del usuario..");
+        Console.WriteLine("El nombre de la persona es: " + nombre);
+        Console.WriteLine("El numero de telefono de la persona es: " + telefono);
+        Console.WriteLine("El correo de la persona es: " + correo);
+    }
+}
+
+//////////////////
+//Alumno
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace Agenda_Escolar;
+
+//Unimos nuestra clase hija con la padre
+public class Alumno : Contacto
+{
+    //Creamos nuestros atributos
+    private string matricula;
+    private string carrera;
+    private string grupo;
+
+    public string Getmatricula()
+    {
+        return matricula;
+    }
+
+    public void setmatricula(string mat)
+    {
+        matricula = mat;
+    }
+
+    public string Getcarrera()
+    {
+        return carrera;
+    }
+
+    public void setcarrera(string car)
+    {
+        carrera = car;
+    }
+
+    public string Getgrupo()
+    {
+        return grupo;
+    }
+
+    public void setgrupo(string gru)
+    {
+        grupo = gru;
+    }
+
+    //Usamos override para reemplazar el metodo de mostrainfo del contacto (Clase padre)
+    public override void Mostrarinformacion()
+    {
+        Console.WriteLine("Informacion del alumno..");
+        Console.WriteLine("El nombre del alumno es: " + Getnombre());
+        Console.WriteLine("El numero de telefono del alumno es: " + Gettelefono());
+        Console.WriteLine("El correo del alumno es: " + Getcorreo());
+        Console.WriteLine("Su matricula es: " + Getmatricula());
+        Console.WriteLine("Su carrera es: " + Getcarrera());
+        Console.WriteLine("Su grupo es: " + Getgrupo());
+    }
+
+
+
+
+
+}
+
+/////////
+//clase hija profesor
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace Agenda_Escolar;
+
+public class Profesor : Contacto
+{
+    private string coordinacion;
+
+    //Creacion de atributos publicos para usarlos
+    public string Getcoordinacion()
+    {
+        return coordinacion;
+    }
+
+    public void setcoordinacion(string coor)
+    {
+        coordinacion = coor;
+    }
+
+    public override void Mostrarinformacion()
+    {
+        Console.WriteLine("Informacion del profesor..");
+        Console.WriteLine("El nombre del profesor es: " + Getnombre());
+        Console.WriteLine("El numero de telefono del profesor es: " + Gettelefono());
+        Console.WriteLine("El correo del profesor es: " + Getcorreo());
+        Console.WriteLine("Coordinacion: " + Getcoordinacion());
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// See https://aka.ms/new-console-template for more information
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace Agenda_Escolar;
+
+public static class Program
+{
+    public static void Main()
+    {
+        //Hay que hacer nuestra lista para posteriormente podamos registrar, Consultar, modificar, eliminar y mostrar informacion
+
+        List<Contacto> agenda = new List<Contacto>();
+
+
+
+        //Creamos nuestro menu dentro de un do while para repetir hasta que el usuario desee
+
+        //Declare en 0 una variable tipo entera de opc para que em usuario seleccione una opcion 
+        int opc = 0;
+        do
+        {
+            Console.WriteLine("---Menu---");
+
+            Console.WriteLine("1. Registrar Alumno");
+            Console.WriteLine("2. Registrar Profesor");
+            Console.WriteLine("3. Buscar Contactos ");
+            Console.WriteLine("4. Modificar Contactos");
+            Console.WriteLine("5. Eliminar informacion");
+            Console.WriteLine("6. Mostrar informacion");
+            Console.WriteLine("7. Salir del programa");
+            Console.WriteLine(" ");
+            Console.WriteLine("Seleccione una opcion");
+            opc = int.Parse(Console.ReadLine());
+
+
+            switch (opc)
+            {
+
+                case 1:
+                    Alumno a = new Alumno();
+                    Console.WriteLine("Usted selecciono la opc. 1 registar alumno");
+
+                    Console.WriteLine("Nombre del alumno:");
+                    a.setnombre(Console.ReadLine());
+
+                    Console.WriteLine("Telefono: ");
+                    a.settelefono(Console.ReadLine());
+
+                    Console.WriteLine("Correo: ");
+                    a.setcorreo(Console.ReadLine());
+
+                    Console.WriteLine("Matricula: ");
+                    a.setmatricula(Console.ReadLine());
+
+                    Console.WriteLine("Carrera: ");
+                    a.setcarrera(Console.ReadLine());
+
+                    Console.WriteLine("Grupo: ");
+                    a.setgrupo(Console.ReadLine());
+
+
+                    Console.WriteLine("Alumno registrado con exito");
+                    agenda.Add(a); //Añadimos tipo alumno con a a la list
+                    Console.WriteLine("");
+
+                    break;
+
+
+                case 2:
+                    Profesor p = new Profesor();
+                    Console.WriteLine("Usted selecciono la opc. 2 registar profesor");
+
+                    Console.WriteLine("Nombre del profesor: ");
+                    p.setnombre(Console.ReadLine());
+
+                    Console.WriteLine("Telefono: ");
+                    p.settelefono(Console.ReadLine());
+
+                    Console.WriteLine("Correo: ");
+                    p.setcorreo(Console.ReadLine());
+
+                    Console.WriteLine("Coordinacion: ");
+                    p.setcoordinacion(Console.ReadLine());
+
+                    Console.WriteLine("Profesor registrado con exito");
+
+                    agenda.Add(p); //Añadimos tipo profesor con p a la lista
+                    Console.WriteLine("");
+
+
+                    break;
+
+
+                case 3:
+                    Console.WriteLine("Usted selecciono la opc. 3 Buscar contacto");
+                    Console.WriteLine("Ingrese nombre a buscar: ");
+                    string buscar = Console.ReadLine();
+
+                    bool encontrado = false;  //Cree una variable bool para saber si se eocntro si es correcto esto se vuelve true por el contrario false aun no encontramos nada
+
+                    //haremos un recorrdio en agenda y si encutra el nombrw que ya habia.os alamcenado entonces dufa que lo encontro de lo contrario no lo ha encontrado
+                    foreach (Contacto con in agenda)
+                    {
+
+
+                        if (con.Getnombre() == buscar)
+                        {
+                            Console.WriteLine("Contacto encontrado con exito");
+                            con.Mostrarinformacion();
+                            encontrado = true;
+                            Console.WriteLine("");
+
+                            break;
+                        }
+
+                    }
+
+                    if (!encontrado)
+                    {
+                        Console.WriteLine("Usuario no encontrado");
+                        Console.WriteLine("");
+
+                    }
+
+                    break;
+
+
+                case 4: //modificar contacto
+
+                    Console.WriteLine("Usted selecciono la opc. 4 Modificar contacto");
+                    Console.WriteLine("Seleccione el nombre del contacto a modificar");
+                    string modificar = Console.ReadLine();
+
+                    bool localizado = false;//Cree una variable bool para saber si se encontro si es correcto esto se vuelve true por el contrario si es false aun no encontramos nada
+
+                    //Aqui modificaremos pero primero haremos un recorrido con un foreach para verificar si hay un dato a cambiar o que podamos cambiar
+                    foreach (Contacto con in agenda)
+                    {
+                        if (con.Getnombre() == modificar)
+                        {
+                            localizado = true; //si es true encontramos con exito el contacto y proseguiremos con la modificacion
+
+
+                            Console.WriteLine("Nuevo nombre: ");
+                            con.setnombre(Console.ReadLine());
+
+                            Console.WriteLine("Cual es el nuevo telefono a modificar");
+                            con.settelefono(Console.ReadLine());
+
+                            Console.WriteLine("Cual es el nuevo correo a modificar");
+                            con.setcorreo(Console.ReadLine());
+
+                            Console.WriteLine("Contacto modificado con exito");
+                            Console.WriteLine("");
+                            break;
+                        }
+
+                    }
+                    if (!localizado)//si es false ! esto invalida, y lo marcara como mo encontrado por que no esta en la lista 
+                    {
+                        Console.WriteLine("Usuario no encontrado para su modificacion, favor de verificar su informacion");
+                        Console.WriteLine("");
+                    }
+
+                    break;
+
+                case 5: //Eliminar contacto
+                    Console.WriteLine("Usted selecciono la Opc.5 Eliminar contacto");
+                    Console.WriteLine("Seleccione el nombre del contacto a eliminar");
+                    string eliminar = Console.ReadLine(); //Igual que anteriormente usamos un bool para marcar si se encontro, coemnzamos con false que ya que aun no buscamos ya una vez buscado si lo encontramos esto se volvera true
+
+                    bool buscador = false;
+
+                    for (int i = 0; i < agenda.Count; i++)
+                    {
+
+                        if (agenda[i].Getnombre() == eliminar)
+                        {
+                            buscador = true;
+
+                            agenda.RemoveAt(i); //Remove at nos ayudara a remover si se encuatra la coincidencia al hacer el recorrido en nustra lista
+                            Console.WriteLine("Contacto eliminado con exito");
+                            Console.WriteLine("");
+                            break;
+                        }
+                    }
+
+                    if (!buscador)
+                    {
+                        Console.WriteLine("Usuario no encontrado, favor de verificar su informacion");
+                        Console.WriteLine("");
+                    }
+
+
+
+
+                    break;
+
+                case 6: //Mostrar contacto
+                    Console.WriteLine("Usted selecciono la opc. 6 Mostar informacion");
+
+                    if (agenda.Count == 0) //en caso de que no haya nasa registrado hacemos un console.writeline para saber si hay un user registrado
+                    {
+                        Console.WriteLine("Usted aun no registra ninguna informacion de contactos");
+                        Console.WriteLine("");
+                    }
+                    else
+                    { //Si no recorreremos nuestra lista para buscar contactos haremos un recorrido para mostrar la info guardada
+                        foreach (Contacto cont in agenda)
+                        {
+                            cont.Mostrarinformacion();
+                            Console.WriteLine("");
+                        }
+                    }
+
+
+
+                    break;
+
+                case 7:
+                    Console.WriteLine("Saliendo del programa....");
+
+                    break;
+            }
+
+
+
+
+
+
+        } while (opc != 7);
+
+
+
+    }
+}
